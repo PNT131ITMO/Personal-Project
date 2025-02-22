@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Home</title>
+</head>
+<body>
+    <nav class="main-header">
+        <div class="header-content">
+            <div class="nav-left">
+                <h1 class="logo"></h1>
+                <div class="nav-links">
+                    <a href="">Home</a>
+                    <a href="#">Records</a>
+                    <a href="#">Lessons</a>
+                    <a href="#">Vocabulary</a>
+                    <a href="#">Download</a>
+                </div>
+            </div>
+
+            <!-- Record info -->
+            <div class="nav-right">
+                <div class="record-info">
+                    <p>Davond 30 mins moves to def erased's recover</p>
+                    <div class="record-counter">
+                        <span>0.3</span>
+                        <span>Free Records Left</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+<div class="container">
+    <header class="header">
+        <h1>Record 30 min more to get speech report</h1>
+        <p>Report includes grammar and pronunciation analysis</p>
+    </header>
+
+    <!-- Main Content Grid -->
+    <div class="main-grid">
+        <!-- Left Column -->
+        <div class="left-column">
+            <section class="card">
+                <h2>Read About</h2>
+                <button class="topic-btn">Check pronunciation</button>
+                <p>The Benefits of Billingsalism and Multilingualism in Society</p>
+                <div class="topic-buttons">
+                    <button>Start with my text</button>
+                    <button>Start with my topic</button>
+                </div>
+                <div class="categories">
+                    <span>education</span>
+                    <span>small talk</span>
+                    <span>music sports relationships</span>
+                    <span>movies travel</span>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Review Conversation</h2>
+                <button>Practice words and phrases</button>
+                <button class="set-btn">Set All Conversations</button>
+            </section>
+
+            <div class="feedback-section">
+                <button class="feedback-btn">Get feedback</button>
+                <p>Hey Tyau, start getting feedback! Let me tell you how you can use Pronounce.</p>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <section class="card lessons">
+                <h2>Lessons</h2>
+                <div class="lesson-item">
+                    <h3>Volume:</h3>
+                    <button class="lesson-btn">Start Learning</button>
+                    <p>Next Lesson:<br> Avoiding Sentence Fragments</p>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Plan for today</h2>
+                <p>Speak at least 5 minutes daily to make progress</p>
+                <ol class="plan-list">
+                    <li>Read About</li>
+                    <li>Chat with/it speech coach</li>
+                    <li>Record not life conversation</li>
+                    <li>Practice words and phrases</li>
+                </ol>
+            </section>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <h2>Daily speaking time</h2>
+        <p>Each and every record contributes to your overall speaking time tally.</p>
+        <button class="calendar-btn">Add calendar reminder</button>
+
+        <table class="calendar-table">
+            <tr>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td>18</td>
+                <td>19</td>
+                <td>20</td>
+                <td>21</td>
+                <td>22</td>
+                <td>23</td>
+            </tr>
+        </table>
+    </section>
+</div>
+</body>
+</html>
