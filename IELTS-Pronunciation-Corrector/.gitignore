@@ -1,5 +1,0 @@
-# Other files or directories to ignore
-*.log
-*.pyc
-__pycache__/
-venv/

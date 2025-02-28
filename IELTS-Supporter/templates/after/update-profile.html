@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/update-profile.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <style>
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+            width: 250px;
+        }
+
+        .toast .progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background-color: green;
+            width: 100%;
+            animation: countdown 5s linear forwards;
+        }
+
+        @keyframes countdown {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar top -->
+    <div class="navbar-top">
+        <div class="title">
+            <h1>Profile</h1>
+        </div>
+
+        <!-- Navbar -->
+        <ul>
+            <li>
+                <a href="#notification" id="notification-icon">
+                    <button class="icon-active" id="notification-active" style="visibility: hidden;"></button>
+                    <i class="fa fa-bell fa-2x"></i>
+                </a>
+                <div id="notification-dropdown" class="dropdown-content">
+                    <p style="font-size: larger;
+                        font-weight: bold;
+                        font-family: inherit;
+                        margin-bottom: 10px;"
+                    >
+                        Notifications
+                    </p>
+                    <div id="notifications" style="font-size: 16px; color: green;"></div>
+                </div>
+            </li>
+            <li>
+                <form method="GET" action="/logout">
+                    <button type="submit" style="background: none; border: none; cursor: pointer;">
+                        <i class="fa fa-sign-out-alt fa-2x"></i>
+                    </button>
+                </form>
+            </li>
+        </ul>
+        <!-- End -->
+    </div>
+    <!-- End -->
+
+    <!-- Sidenav -->
+    <div class="sidenav">
+        <div class="profile">
+            <form id="upload-form" method="POST" action="/upload-image" enctype="multipart/form-data">
+                <label for="file-input">
+                    <i class="fa fa-pen fa-xs edit" style="cursor: pointer;"></i>
+                </label>
+                <input type="file" id="file-input" name="image" style="display: none;">
+            </form>
+            <img src="{{ url_for('static', filename='images/' + avatar) }}" alt="" width="100" height="100">
+
+            <div class="name">
+                {{firstname}} {{lastname}}
+            </div>
+            <div class="job">
+                {{job}}
+            </div>
+        </div>
+
+        <div class="sidenav-url">
+            <div class="url" href="/profile/{{profile}}">
+                <a>Profile</a>
+                <hr align="center">
+            </div>
+            <div class="url">
+                <a>Settings</a>
+                <hr align="center">
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings-section" style="display: block;">
+            <a>Settings</a>
+            <div class="card">
+                <div class="card-body">
+                    <button onclick="location.href='/profile/update'">Update Profile</button>
+                    <button onclick="location.href='/profile/change-password'">Change Password</button>
+                </div>
+            </div>
+        </div>
+        <!-- End Settings Section -->
+    </div>
+    <!-- End -->
+
+    <!-- Main -->
+    <div class="main">
+        <h2>IDENTITY</h2>
+        <div class="card">
+            <form class="card-body" method="POST" action="/profile/update">
+                <div class="update-form">
+                    <label for="firstname">First Name</label>
+                    <input type="text" name="firstname" placeholder="{{ firstname }}" id="firstname">
+                </div>
+                <div class="update-form">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" name="lastname" placeholder="{{ lastname }}" id="lastname">
+                </div>
+                <div class="update-form">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="{{ email }}" id="email">
+                </div>
+                <div class="update-form">
+                    <label for="address">Address</label>
+                    <input type="text" name="address" placeholder="{{ address }}" id="address">
+                </div>
+                <div class="update-form">
+                    <label for="hobbies">Hobbies</label>
+                    <input type="text" name="hobbies" placeholder="{{ hobbies }}" id="hobbies">
+                </div>
+                <div class="update-form">
+                    <label for="job">Job</label>
+                    <input type="text" name="job" placeholder="{{ job }}" id="job">
+                </div>
+                <div class="update-form">
+                    <label for="skill">Skill</label>
+                    <input type="text" name="skill" placeholder="{{ skill }}" id="skill">
+                </div>
+                <div class="message">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages and 'successful' in messages[0] %}
+                            <p style="color: green; font-size:16px">{{ messages[0] }}</p>
+                        {% else %}
+                            <p style="color: red; font-size:16px">{{ messages[0] }}</p>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="submit">
+                    <button type="submit">Update Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="toast" id="toast">
+        You have a new notification!
+        <div class="progress"></div>
+    </div>
+    <!-- End -->
+    <script>
+        document.getElementById('file-input').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                document.getElementById('upload-form').submit(); // Gửi form ngay sau khi chọn file
+            }
+        });
+        var socket = io();
+
+        socket.on('notify_new_user', function(data) {
+            var notification = document.createElement("p");
+            notification.innerText = data.message;
+            document.getElementById("notifications").appendChild(notification);
+            document.getElementById("notification-active").style.visibility = "visible";
+
+            // Show the toast notification
+            var toast = document.getElementById("toast");
+            toast.style.display = "block";
+
+            // Hide the toast notification after 5 seconds
+            setTimeout(function() {
+                toast.style.display = "none";
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

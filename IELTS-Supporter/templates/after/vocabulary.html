@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vocabulary.css') }}">
+    <title>Vocabulary</title>
+</head>
+<body>
+<nav class="main-header">
+    <div class="header-content">
+        <div class="nav-left">
+            <h1 class="logo"></h1>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="#">Records</a>
+                <a href="#">Lessons</a>
+                <a href="/vocabulary/">Vocabulary</a>
+                <a href="#">Download</a>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <div class="avatar-dropdown">
+                {% if current_user %}
+                    <img src="{{ url_for('static', filename='images/' + current_user.avatar if current_user.avatar != 'default-avatar.png' else 'images/default-avatar.png') }}"
+                         alt="User Avatar" class="avatar" id="avatarBtn">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/default-avatar.png') }}" alt="Default Avatar"
+                         class="avatar" id="avatarBtn">
+                {% endif %}
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="/profile">Profile</a>
+                    <a href="/change-password">Settings</a>
+                    <a href="/logout">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="deck-container">
+        <button class="add-deck-btn" id="addDeckBtn">Add Deck</button>
+        <h2>Your Decks</h2>
+        <div class="deck-grid" id="deckGrid">
+            {% for deck in decks %}
+                <div class="deck-block" data-deck-id="{{ deck[0] }}">
+                    <h3>{{ deck[1] }}</h3>
+                    <span class="card-count">{{ deck[2] }} cards</span>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Modal để thêm deck -->
+        <div class="modal" id="addDeckModal">
+            <div class="modal-content">
+                <button class="close-modal" id="closeAddDeckModal">&times;</button>
+                <h2>Create New Deck</h2>
+                <form action="/vocabulary/create_deck" method="POST" id="createDeckForm">
+                    <label for="deck_name">Deck Name:</label>
+                    <input type="text" id="deck_name" name="deck_name" required>
+                    <button type="submit">Create Deck</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal để hiển thị cards trong deck -->
+        <div class="modal" id="deckCardsModal">
+            <div class="modal-content">
+                <button class="close-modal" id="closeDeckCardsModal">&times;</button>
+                <h2 id="deckModalTitle"></h2>
+                <div class="card-grid" id="cardGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const currentUser = "{{ current_user.username if current_user else 'Guest' }}";
+</script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vocabulary.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+/* Header Styles */
+.main-header {
+    background: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #007bff;
+}
+
+/* Avatar Dropdown */
+.avatar-dropdown {
+    position: relative;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    display: none;
+}
+
+.dropdown-menu.active {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-menu a:hover {
+    background: #f5f5f5;
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin: 80px auto 2rem;
+    padding: 2rem;
+}
+
+.empty-state {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Flash Messages */
+.flashes {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.flashes .success {
+    background: #d4edda;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.flashes .error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+/* Decks List */
+.empty-state ul {
+    list-style: none;
+    margin: 1rem 0;
+}
+
+.empty-state ul li {
+    margin: 0.5rem 0;
+}
+
+.empty-state ul li a {
+    display: block;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s;
+}
+
+.empty-state ul li a:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+/* Forms */
+form {
+    margin: 2rem 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Vocabulary List */
+.vocabulary-list li {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.vocabulary-list li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .container {
+        padding: 1rem;
+        margin-top: 60px;
+    }
+
+    .empty-state {
+        padding: 1rem;
+    }
+}
+
+.deck-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    text-align: center;
+    position: relative;
+}
+
+.deck-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(1000px, 1fr));
+    gap: 50px;
+    margin: 50px 0;
+}
+
+.deck-block {
+    border: 5px solid #ccc;
+    padding: 75px;
+    border-radius: 40px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    font-size: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.deck-block:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.add-deck-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-deck-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Nút Add Card */
+.add-card-btn {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-card-btn:hover {
+    background-color: #218838;
+}
+
+/* Modal styles - Tăng kích thước */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 2% auto; /* Giảm margin để modal cao hơn */
+    padding: 40px; /* Tăng padding lên gấp đôi (từ 20px lên 40px) */
+    width: 90%; /* Tăng chiều rộng từ 80% lên 90% */
+    max-width: 800px; /* Tăng max-width từ 500px lên 800px */
+    border-radius: 16px; /* Tăng bo góc từ 8px lên 16px */
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Thêm bóng lớn hơn */
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px; /* Tăng khoảng cách từ 10px lên 15px */
+    right: 15px; /* Tăng khoảng cách từ 10px lên 15px */
+    font-size: 30px; /* Tăng kích thước nút đóng từ 20px lên 30px */
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.card {
+    border: 2px solid #007bff;
+    padding: 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: #fff;
+    position: relative;
+    transition: transform 0.6s, box-shadow 0.3s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #333;
+    text-align: center;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background-color: #f8f9fa;
+}
