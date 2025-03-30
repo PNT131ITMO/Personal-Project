@@ -45,7 +45,7 @@ function showDeckCards(deckId, deckName) {
     })
         .then(response => {
             if (response.status === 401) { // Xử lý riêng trường hợp unauthorized
-                window.location.href = '/login'; // Redirect đến trang đăng nhập
+                window.location.href = '/login';
                 return;
             }
             if (!response.ok) {

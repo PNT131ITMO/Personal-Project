@@ -48,6 +48,11 @@
                 <h1>Record 30 min more to get speech report</h1>
                 <p>Report includes grammar and pronunciation analysis</p>
             </section>
+            <section class="video-section">  <!-- Optional:  A container for the video -->
+                <video width="640" height="360" controls>
+                    <source src="static/video/last.mp4" type="video/mp4">
+                </video>
+            </section>
             <section class="card">
                 <h2>Read About</h2>
                 <button class="topic-btn">Check pronunciation</button>
@@ -91,12 +96,14 @@
                 <h2>Plan for today</h2>
                 <p>Speak at least 5 minutes daily to make progress</p>
                 <ol class="plan-list">
-                    <li>Read About</li>
-                    <li>Chat with/it speech coach</li>
-                    <li>Record not life conversation</li>
-                    <li>Practice words and phrases</li>
+                    {% for todo in todos %}
+                        <li>{{ todo.task }}</li>
+                    {% else %}
+                        <li>No todos yet!</li>
+                    {% endfor %}
                 </ol>
             </section>
+
         </div>
     </div>
     <!-- Stats Section -->
@@ -132,5 +139,18 @@
     const currentUser = "{{ current_user.lastname if current_user else 'Guest' }}";
 </script>
 <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Add To-Do List Item</h2>
+        <form id="todo-form">
+            <label for="todo-text">Task:</label>
+            <input type="text" id="todo-text" name="todo-text"><br><br>
+            <label for="todo-date">Due Date:</label>
+            <input type="date" id="todo-date" name="todo-date"><br><br>
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

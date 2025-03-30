@@ -1,11 +1,9 @@
-// Xử lý dropdown của avatar
 document.getElementById('avatarBtn').addEventListener('click', function (e) {
     e.preventDefault();
     const dropdown = document.getElementById('dropdownMenu');
     dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
 });
 
-// Ẩn dropdown khi nhấp ra ngoài
 document.addEventListener('click', function (e) {
     const avatar = document.getElementById('avatarBtn');
     const dropdown = document.getElementById('dropdownMenu');
@@ -14,9 +12,7 @@ document.addEventListener('click', function (e) {
     }
 });
 
-// Xử lý lịch và hiển thị tên người dùng khi trang tải
 document.addEventListener('DOMContentLoaded', function () {
-    // Hiển thị tên người dùng trong feedback
     const feedbackMessage = document.getElementById('feedbackMessage');
     if (currentUser && currentUser !== 'Guest') {
         feedbackMessage.textContent = `Hey ${currentUser}, start getting feedback! Let me tell you how you can use Pronounce.`;
@@ -24,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
         feedbackMessage.textContent = `Hey Guest, start getting feedback! Let me tell you how you can use Pronounce.`;
     }
 
-    // Xử lý lịch
     const calendarTable = document.getElementById('calendar-table').getElementsByTagName('tbody')[0];
     const currentMonthYear = document.getElementById('current-month-year');
     const prevMonthBtn = document.getElementById('prev-month');
@@ -36,8 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function renderCalendar(month, year) {
         calendarTable.innerHTML = '';
-        // Sử dụng 'en-US' để hiển thị tháng bằng tiếng Anh
-        currentMonthYear.textContent = `${new Date(year, month).toLocaleString('en-US', { month: 'long' })} ${year}`;
+        currentMonthYear.textContent = `${new Date(year, month).toLocaleString('en-US', {month: 'long'})} ${year}`;
 
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -86,4 +80,65 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     renderCalendar(currentMonth, currentYear);
+
+    var modal = document.getElementById("myModal");
+
+    var btn = document.querySelector(".calendar-btn");
+
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Handle form submission (AJAX)
+    document.getElementById("todo-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        var taskText = document.getElementById("todo-text").value;
+        var taskDate = document.getElementById("todo-date").value;
+
+        fetch('/todo/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `task=${taskText}&due_date=${taskDate}`
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                console.error('Error adding todo:', data.error);
+                alert('Error adding todo: ' + data.error);
+            } else {
+                console.log('Todo added:', data);
+                var todoList = document.querySelector(".plan-list"); // Correct selector
+                var newTodoItem = document.createElement("li");
+                newTodoItem.textContent = data.task;
+                todoList.appendChild(newTodoItem);
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert('Error adding todo: ' + error);
+        })
+        .finally(() => {
+            modal.style.display = "none"; // Close the modal
+        });
+    });
 });
